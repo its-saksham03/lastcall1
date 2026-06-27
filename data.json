@@ -1,0 +1,338 @@
+{
+  "tasks": [
+    {
+      "id": "task_1782561279207_tt9zsk3to",
+      "status": "pending",
+      "createdAt": "2026-06-27T11:54:39.207Z",
+      "updatedAt": "2026-06-27T11:54:39.207Z",
+      "title": "Project Sentinel Submission",
+      "deadline": "2026-06-27T15:54:39.206Z",
+      "priority": "high",
+      "description": "Submit Design Phase III for Project Sentinel.",
+      "source": "screenshot"
+    }
+  ],
+  "calendarBlocks": [
+    {
+      "id": "block_1782561279210_q9pv6xwgr",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T11:54:39.210Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T12:54:39.209Z",
+      "end": "2026-06-27T14:54:39.209Z"
+    },
+    {
+      "id": "block_1782561379795_jvkv20rs8",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T11:56:19.795Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T12:56:19.780Z",
+      "end": "2026-06-27T14:56:19.780Z"
+    },
+    {
+      "id": "block_1782561439787_ckx1foz9r",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T11:57:19.787Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T12:57:19.786Z",
+      "end": "2026-06-27T14:57:19.786Z"
+    },
+    {
+      "id": "block_1782561499801_9d21pbqbf",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T11:58:19.801Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T12:58:19.800Z",
+      "end": "2026-06-27T14:58:19.800Z"
+    },
+    {
+      "id": "block_1782561559814_4i661u8bh",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T11:59:19.814Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T12:59:19.814Z",
+      "end": "2026-06-27T14:59:19.814Z"
+    },
+    {
+      "id": "block_1782561619829_18g4woeke",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T12:00:19.829Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T13:00:19.828Z",
+      "end": "2026-06-27T15:00:19.828Z"
+    },
+    {
+      "id": "block_1782561679840_aurmipcfr",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T12:01:19.840Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T13:01:19.838Z",
+      "end": "2026-06-27T15:01:19.838Z"
+    },
+    {
+      "id": "block_1782561691677_7h18zj39r",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T12:01:31.677Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T13:01:31.675Z",
+      "end": "2026-06-27T15:01:31.675Z"
+    },
+    {
+      "id": "block_1782561711744_fo1cv3kmr",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T12:01:51.744Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T13:01:51.743Z",
+      "end": "2026-06-27T15:01:51.743Z"
+    },
+    {
+      "id": "block_1782561739840_49cfqkb0e",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T12:02:19.840Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T13:02:19.839Z",
+      "end": "2026-06-27T15:02:19.839Z"
+    },
+    {
+      "id": "block_1782561799849_u0utedhwp",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T12:03:19.849Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T13:03:19.848Z",
+      "end": "2026-06-27T15:03:19.848Z"
+    },
+    {
+      "id": "block_1782561859854_x1owba90o",
+      "status": "scheduled",
+      "createdAt": "2026-06-27T12:04:19.854Z",
+      "taskId": "task_1782561279207_tt9zsk3to",
+      "title": "Focus Time: Project Sentinel Submission",
+      "start": "2026-06-27T13:04:19.853Z",
+      "end": "2026-06-27T15:04:19.853Z"
+    }
+  ],
+  "activityLog": [
+    {
+      "id": "log_1782561859855_sk27gpumu",
+      "timestamp": "2026-06-27T12:04:19.855Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:34:19 pm - 8:34:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561859854_x1owba90o",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561799850_pqrt46wx6",
+      "timestamp": "2026-06-27T12:03:19.850Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:33:19 pm - 8:33:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561799849_u0utedhwp",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561739843_93uwkg8y8",
+      "timestamp": "2026-06-27T12:02:19.843Z",
+      "type": "email_draft_created",
+      "description": "Drafted Email: \"Extension Request: Project Sentinel Submission\"",
+      "details": "To: lead-designer@company.com\n\nDear Lead Designer,\n\nI am writing to request a short 24-hour extension on the \"Project Sentinel Submission\" which is currently due on 27/6/2026, 9:24:39 pm.\n\nLastCall AI Agent has analyzed my calendar and determined that I have multiple conflicting priority deliverables scheduled. I am working diligently to finalize the draft and want to ensure the quality matches our standards.\n\nThank you,\nSaksham\n(Drafted automatically by LastCall Agent)",
+      "status": "awaiting_approval",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "to": "lead-designer@company.com",
+        "subject": "Extension Request: Project Sentinel Submission",
+        "body": "Dear Lead Designer,\n\nI am writing to request a short 24-hour extension on the \"Project Sentinel Submission\" which is currently due on 27/6/2026, 9:24:39 pm.\n\nLastCall AI Agent has analyzed my calendar and determined that I have multiple conflicting priority deliverables scheduled. I am working diligently to finalize the draft and want to ensure the quality matches our standards.\n\nThank you,\nSaksham\n(Drafted automatically by LastCall Agent)",
+        "reason": "Deadline is within 3 hours, and calendar has multiple meetings. Email drafted and held for approval."
+      }
+    },
+    {
+      "id": "log_1782561739842_zmsqrwvqx",
+      "timestamp": "2026-06-27T12:02:19.842Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:32:19 pm - 8:32:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561739840_49cfqkb0e",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561731779_qzmqrfawo",
+      "timestamp": "2026-06-27T12:02:11.779Z",
+      "type": "email_sent",
+      "description": "Sent Email: \"Extension Request: Project Sentinel Submission\"",
+      "details": "Successfully sent to: lead-designer@company.com",
+      "status": "done",
+      "action": null
+    },
+    {
+      "id": "log_1782561711745_bc5gqa97b",
+      "timestamp": "2026-06-27T12:01:51.745Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:31:51 pm - 8:31:51 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561711744_fo1cv3kmr",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561691678_mucjzp8nh",
+      "timestamp": "2026-06-27T12:01:31.678Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:31:31 pm - 8:31:31 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561691677_7h18zj39r",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561690645_51q9svmbi",
+      "timestamp": "2026-06-27T12:01:30.645Z",
+      "type": "replan",
+      "description": "Connected in Simulator (Mock Mode)",
+      "details": "Calendar syncing enabled. Gmail scanner active.",
+      "status": "done",
+      "action": null
+    },
+    {
+      "id": "log_1782561679841_qtuu92a0n",
+      "timestamp": "2026-06-27T12:01:19.841Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:31:19 pm - 8:31:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561679840_aurmipcfr",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561619830_uvbgwuo25",
+      "timestamp": "2026-06-27T12:00:19.830Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:30:19 pm - 8:30:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561619829_18g4woeke",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561559815_iwvf7d09q",
+      "timestamp": "2026-06-27T11:59:19.815Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:29:19 pm - 8:29:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561559814_4i661u8bh",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561499802_dtm5tbsmf",
+      "timestamp": "2026-06-27T11:58:19.802Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:28:19 pm - 8:28:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561499801_9d21pbqbf",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561439789_1u0olewvy",
+      "timestamp": "2026-06-27T11:57:19.789Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:27:19 pm - 8:27:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561439787_ckx1foz9r",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561379796_4ze9c8ztr",
+      "timestamp": "2026-06-27T11:56:19.796Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:26:19 pm - 8:26:19 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561379795_jvkv20rs8",
+        "isLive": false
+      }
+    },
+    {
+      "id": "log_1782561279211_jaqp73yg0",
+      "timestamp": "2026-06-27T11:54:39.211Z",
+      "type": "email_draft_created",
+      "description": "Drafted Email: \"Extension Request: Project Sentinel Submission\"",
+      "details": "To: lead-designer@company.com\n\nDear Lead Designer,\n\nI am writing to request a short 24-hour extension on the \"Project Sentinel Submission\" which is currently due on 27/6/2026, 9:24:39 pm.\n\nLastCall AI Agent has analyzed my calendar and determined that I have multiple conflicting priority deliverables scheduled. I am working diligently to finalize the draft and want to ensure the quality matches our standards.\n\nThank you,\nSaksham\n(Drafted automatically by LastCall Agent)",
+      "status": "approved",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "to": "lead-designer@company.com",
+        "subject": "Extension Request: Project Sentinel Submission",
+        "body": "Dear Lead Designer,\n\nI am writing to request a short 24-hour extension on the \"Project Sentinel Submission\" which is currently due on 27/6/2026, 9:24:39 pm.\n\nLastCall AI Agent has analyzed my calendar and determined that I have multiple conflicting priority deliverables scheduled. I am working diligently to finalize the draft and want to ensure the quality matches our standards.\n\nThank you,\nSaksham\n(Drafted automatically by LastCall Agent)",
+        "reason": "Deadline is within 3 hours, and calendar has multiple meetings. Email drafted and held for approval."
+      }
+    },
+    {
+      "id": "log_1782561279211_fdsqpeki3",
+      "timestamp": "2026-06-27T11:54:39.211Z",
+      "type": "focus_block_created",
+      "description": "Reserved Focus Block: \"Focus Time: Project Sentinel Submission\"",
+      "details": "Scheduled for 27/6/2026, 6:24:39 pm - 8:24:39 pm",
+      "status": "done",
+      "action": {
+        "taskId": "task_1782561279207_tt9zsk3to",
+        "blockId": "block_1782561279210_q9pv6xwgr",
+        "isLive": false
+      }
+    }
+  ],
+  "oauthTokens": null,
+  "userProfile": {
+    "name": "Saksham",
+    "email": "saksham@lastcall.ai",
+    "picture": "https://lh3.googleusercontent.com/aida-public/AB6AXuDX1k7OU_r4ihYkb37-4AYVpnUwz-GCz_zVyIU0o6TpZbSVoGA5ZslJGvu6yq05FUEhyYdfbDQMqpRWBtuEJHOo57yFz5aY685uXAqSUhyg9PVR0EOnlqocURR-yiMn8vhkKozcaFPFmQKHggDAv0JbHGgIUWhDbZBi7_gnwgo2SsnrB867oY1XqByw3AK03cFVWI6_AEJhdDmY55hjK6CVm37tDwPly4368_eQb3gwXyfyAH3JgypLUGeb95st3hBfWLoP2aV6EZ43",
+    "isLive": false
+  }
+}
