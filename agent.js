@@ -4,7 +4,9 @@ import dotenv from 'dotenv';
 import * as db from './db.js';
 import { google } from 'googleapis';
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const apiKey = process.env.GEMINI_API_KEY;
 let genAI = null;

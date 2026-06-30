@@ -10,7 +10,9 @@ import { google } from 'googleapis';
 import * as db from './db.js';
 import { parseCapture, runPlannerLoop } from './agent.js';
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -515,6 +517,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`=========================================`);
   console.log(`LastCall AI Server running on port ${PORT}`);
-  console.log(`OAuth Callback: http://localhost:${PORT}/api/auth/callback`);
+  const callbackUri = process.env.GOOGLE_REDIRECT_URI || `http://localhost:${PORT}/api/auth/callback`;
+  console.log(`OAuth Callback: ${callbackUri}`);
   console.log(`=========================================`);
 });
