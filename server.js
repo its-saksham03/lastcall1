@@ -155,20 +155,38 @@ app.get('/api/auth/google', (req, res) => {
     state: state // Pass it to Google
   });
 
-  res.redirect(url);
+  // Force session save to avoid race condition on immediate redirect
+  req.session.save((err) => {
+    if (err) {
+      console.error('Failed to save OAuth session', err);
+      return res.status(500).send('Failed to initialize session');
+    }
+    res.redirect(url);
+  });
 });
 
 app.get('/api/auth/callback', async (req, res) => {
   const { code, state } = req.query;
 
+  // Add temporary logs for production session debugging
+  console.log("SESSION ID:", req.sessionID);
+  console.log("SESSION:", req.session);
+  console.log("GOOGLE STATE:", state);
+  console.log("SESSION STATE:", req.session ? req.session.oauthState : 'no session');
+
   // Validate state token to guard against CSRF hijacking
-  if (!state || state !== req.session.oauthState) {
+  if (!state || !req.session || state !== req.session.oauthState) {
     console.error('[SECURITY ERROR] OAuth State validation failed.');
     return res.status(403).send('Access Denied: OAuth State validation failed (CSRF risk detected).');
   }
 
-  // Clear state after validation
+  // Clear state after validation and save to store
   delete req.session.oauthState;
+  req.session.save((err) => {
+    if (err) {
+      console.error('Failed clearing OAuth state', err);
+    }
+  });
 
   const oauth2Client = getOAuth2Client();
   if (!oauth2Client) {
