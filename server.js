@@ -17,6 +17,9 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Trust reverse proxy (Railway, Cloud Run, Heroku) for secure cookies
+app.set('trust proxy', 1);
+
 // Ensure temp_uploads folder exists
 const uploadsDir = path.join(process.cwd(), 'temp_uploads');
 if (!fs.existsSync(uploadsDir)) {
@@ -65,7 +68,7 @@ app.use(session({
   saveUninitialized: false, // Security: do not save uninitialized session
   cookie: {
     httpOnly: true, // Prevents client-side scripts from reading cookie
-    secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
+    secure: 'auto', // Automatically sets secure flag when under HTTPS, works for HTTP locally too
     sameSite: 'lax', // Protect against CSRF
     maxAge: 24 * 60 * 60 * 1000 // 24 hours session expiry
   }
