@@ -65,6 +65,7 @@ app.use(express.json());
 const sessionStore = new session.MemoryStore();
 
 // Secure session configurations
+const isProd = process.env.NODE_ENV === 'production';
 app.use(session({
   store: sessionStore,
   secret: process.env.SESSION_SECRET || 'lastcall-hackathon-super-secret-key-10x',
@@ -72,8 +73,8 @@ app.use(session({
   saveUninitialized: false, // Security: do not save uninitialized session
   cookie: {
     httpOnly: true, // Prevents client-side scripts from reading cookie
-    secure: 'auto', // Automatically sets secure flag when under HTTPS, works for HTTP locally too
-    sameSite: 'lax', // Protect against CSRF
+    secure: isProd, // Must be secure under HTTPS in production
+    sameSite: isProd ? 'none' : 'lax', // 'none' for production cross-site redirects, 'lax' for local dev
     maxAge: 24 * 60 * 60 * 1000 // 24 hours session expiry
   }
 }));
