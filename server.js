@@ -61,8 +61,12 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Initialize explicit sessionStore to track active sessions globally
+const sessionStore = new session.MemoryStore();
+
 // Secure session configurations
 app.use(session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET || 'lastcall-hackathon-super-secret-key-10x',
   resave: false,
   saveUninitialized: false, // Security: do not save uninitialized session
@@ -74,7 +78,7 @@ app.use(session({
   }
 }));
 
-// Configure OAuth2 client helper with server-side token auto-refresh saving
+// Configure OAuth2 client helper
 function getOAuth2Client() {
   const clientID = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
@@ -84,28 +88,32 @@ function getOAuth2Client() {
     return null;
   }
   
-  const oauth2Client = new google.auth.OAuth2(clientID, clientSecret, redirectURI);
-  
-  // Listen for refresh events to persist fresh tokens server-side
-  oauth2Client.on('tokens', (tokens) => {
-    console.log('[OAUTH REFRESH] Received refreshed Google tokens.');
-    const currentTokens = db.getOAuthTokens() || {};
-    const merged = { ...currentTokens, ...tokens };
-    db.setOAuthTokens(merged);
-  });
-
-  return oauth2Client;
+  return new google.auth.OAuth2(clientID, clientSecret, redirectURI);
 }
 
-// Retrieve client configured with user's credentials stored in SQLite
-function getAuthClientForSession() {
+// Retrieve client configured with user's credentials stored in session
+function getAuthClientForSession(req) {
+  if (!req || !req.session) return null;
+
   const client = getOAuth2Client();
   if (!client) return null;
 
-  const tokens = db.getOAuthTokens();
+  const tokens = req.session.tokens;
   if (!tokens) return null;
 
   client.setCredentials(tokens);
+
+  // Bind refresh token updates to this specific user's session
+  client.on('tokens', (newTokens) => {
+    console.log('[OAUTH REFRESH] Received refreshed Google tokens for session:', req.sessionID);
+    req.session.tokens = { ...req.session.tokens, ...newTokens };
+    req.session.save((err) => {
+      if (err) {
+        console.error('Failed to save refreshed tokens to session:', err);
+      }
+    });
+  });
+
   return client;
 }
 
@@ -180,13 +188,8 @@ app.get('/api/auth/callback', async (req, res) => {
     return res.status(403).send('Access Denied: OAuth State validation failed (CSRF risk detected).');
   }
 
-  // Clear state after validation and save to store
+  // Clear state after validation
   delete req.session.oauthState;
-  req.session.save((err) => {
-    if (err) {
-      console.error('Failed clearing OAuth state', err);
-    }
-  });
 
   const oauth2Client = getOAuth2Client();
   if (!oauth2Client) {
@@ -200,7 +203,9 @@ app.get('/api/auth/callback', async (req, res) => {
   try {
     const { tokens } = await oauth2Client.getToken(code);
     oauth2Client.setCredentials(tokens);
-    db.setOAuthTokens(tokens);
+    
+    // Store tokens and user profile in session instead of SQLite
+    req.session.tokens = tokens;
 
     const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
     const profileRes = await oauth2.userinfo.get();
@@ -211,7 +216,7 @@ app.get('/api/auth/callback', async (req, res) => {
       picture: profileRes.data.picture,
       isLive: true
     };
-    db.setUserProfile(profile);
+    req.session.user = profile;
 
     db.addActivityLog({
       type: 'scan',
@@ -222,7 +227,12 @@ app.get('/api/auth/callback', async (req, res) => {
     // Run agent loop
     await runPlannerLoop(oauth2Client);
 
-    res.redirect(redirectUrl); 
+    req.session.save((err) => {
+      if (err) {
+        console.error('Failed to save session tokens:', err);
+      }
+      res.redirect(redirectUrl); 
+    });
   } catch (err) {
     console.error('Error during OAuth callback:', err);
     res.redirect(`${redirectUrl}/?error=auth_failed`);
@@ -236,7 +246,7 @@ app.post('/api/auth/mock-login', (req, res) => {
     picture: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDX1k7OU_r4ihYkb37-4AYVpnUwz-GCz_zVyIU0o6TpZbSVoGA5ZslJGvu6yq05FUEhyYdfbDQMqpRWBtuEJHOo57yFz5aY685uXAqSUhyg9PVR0EOnlqocURR-yiMn8vhkKozcaFPFmQKHggDAv0JbHGgIUWhDbZBi7_gnwgo2SsnrB867oY1XqByw3AK03cFVWI6_AEJhdDmY55hjK6CVm37tDwPly4368_eQb3gwXyfyAH3JgypLUGeb95st3hBfWLoP2aV6EZ43',
     isLive: false
   };
-  db.setUserProfile(mockProfile);
+  req.session.user = mockProfile;
   
   db.addActivityLog({
     type: 'scan',
@@ -244,22 +254,31 @@ app.post('/api/auth/mock-login', (req, res) => {
     details: 'Database pipeline active. Ready for Universal Capture input.'
   });
 
-  res.json(mockProfile);
+  req.session.save((err) => {
+    if (err) {
+      console.error('Failed to save session for mock login:', err);
+    }
+    res.json(mockProfile);
+  });
 });
 
 app.get('/api/auth/status', (req, res) => {
-  const profile = db.getUserProfile();
-  if (profile) {
-    res.json({ authenticated: true, user: profile });
+  if (req.session && req.session.user) {
+    res.json({ authenticated: true, user: req.session.user });
   } else {
     res.json({ authenticated: false });
   }
 });
 
 app.post('/api/auth/logout', (req, res) => {
-  db.clearAuth();
-  db.resetAll();
-  res.json({ success: true });
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Failed to destroy session on logout:', err);
+      return res.status(500).json({ error: 'Failed to logout' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ success: true });
+  });
 });
 
 /* ==========================================================================
@@ -284,8 +303,13 @@ app.post('/api/tasks', (req, res) => {
   });
 
   // Trigger agent loop
-  const authClient = getAuthClientForSession();
-  runPlannerLoop(authClient).catch(err => console.error(err));
+  const authClient = getAuthClientForSession(req);
+  runPlannerLoop(authClient)
+    .then(plan => {
+      req.session.latestPlan = plan;
+      req.session.save();
+    })
+    .catch(err => console.error(err));
 
   res.json(task);
 });
@@ -306,8 +330,13 @@ app.post('/api/tasks/toggle-status', (req, res) => {
       details: 'Re-evaluating focus requirements and queue communications.'
     });
 
-    const authClient = getAuthClientForSession();
-    runPlannerLoop(authClient).catch(err => console.error(err));
+    const authClient = getAuthClientForSession(req);
+    runPlannerLoop(authClient)
+      .then(plan => {
+        req.session.latestPlan = plan;
+        req.session.save();
+      })
+      .catch(err => console.error(err));
   }
   res.json(updated);
 });
@@ -361,8 +390,13 @@ app.post('/api/tasks/capture', upload.single('screenshot'), async (req, res) => 
     });
 
     // Run agent loop
-    const authClient = getAuthClientForSession();
-    runPlannerLoop(authClient).catch(err => console.error(err));
+    const authClient = getAuthClientForSession(req);
+    runPlannerLoop(authClient)
+      .then(plan => {
+        req.session.latestPlan = plan;
+        req.session.save();
+      })
+      .catch(err => console.error(err));
 
     res.json(addedTask);
   } catch (err) {
@@ -393,7 +427,7 @@ app.post('/api/activity/approve', async (req, res) => {
 
   try {
     const action = logItem.action;
-    const authClient = getAuthClientForSession();
+    const authClient = getAuthClientForSession(req);
     
     if (authClient && logItem.type === 'email_draft_created') {
       try {
@@ -449,7 +483,7 @@ app.post('/api/activity/undo', async (req, res) => {
     } 
     else if (logItem.type === 'focus_block_created') {
       if (action && action.blockId) {
-        const authClient = getAuthClientForSession();
+        const authClient = getAuthClientForSession(req);
         if (authClient && action.isLive) {
           try {
             const calendar = google.calendar({ version: 'v3', auth: authClient });
@@ -475,8 +509,13 @@ app.post('/api/activity/undo', async (req, res) => {
     }
 
     // Run agent loop
-    const authClient = getAuthClientForSession();
-    runPlannerLoop(authClient).catch(err => console.error(err));
+    const authClient = getAuthClientForSession(req);
+    runPlannerLoop(authClient)
+      .then(plan => {
+        req.session.latestPlan = plan;
+        req.session.save();
+      })
+      .catch(err => console.error(err));
 
     res.json({ success: true });
   } catch (err) {
@@ -490,7 +529,7 @@ app.post('/api/activity/undo', async (req, res) => {
    ========================================================================== */
 
 app.get('/api/agent/plan', (req, res) => {
-  const plan = db.getLatestPlan() || {
+  const plan = (req.session && req.session.latestPlan) || db.getLatestPlan() || {
     primaryRecommendation: null,
     riskScore: 0,
     reasoningSteps: ['No active tasks in database. Sentinel idle.'],
@@ -502,9 +541,15 @@ app.get('/api/agent/plan', (req, res) => {
 
 app.post('/api/agent/replan', async (req, res) => {
   try {
-    const authClient = getAuthClientForSession();
+    const authClient = getAuthClientForSession(req);
     const plan = await runPlannerLoop(authClient);
-    res.json(plan);
+    
+    // Cache plan in user's session
+    req.session.latestPlan = plan;
+    req.session.save((err) => {
+      if (err) console.error('Failed to save latest plan to session:', err);
+      res.json(plan);
+    });
   } catch (err) {
     console.error('Manual replan execution failed:', err);
     res.status(500).json({ error: 'Failed to run agent loop planning' });
@@ -523,8 +568,22 @@ if (fs.existsSync(clientDistPath)) {
 // Background agent interval checks (every 60 seconds)
 setInterval(() => {
   console.log('Background Agent scan check...');
-  const authClient = getAuthClientForSession();
-  runPlannerLoop(authClient).catch(err => console.log('Background planner loop run bypassed:', err.message));
+  sessionStore.all((err, sessions) => {
+    if (err || !sessions) return;
+
+    // Run planner loop for every active authenticated user session
+    Object.keys(sessions).forEach((sid) => {
+      const sess = sessions[sid];
+      if (sess && sess.tokens) {
+        const client = getOAuth2Client();
+        client.setCredentials(sess.tokens);
+        // Run background planner for this user's Google APIs
+        runPlannerLoop(client).catch(err => {
+          console.log(`Background planner loop run bypassed for session ${sid}:`, err.message);
+        });
+      }
+    });
+  });
 }, 60000);
 
 // Global Error Handler Middleware to prevent stack trace information disclosure
